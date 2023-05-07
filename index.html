@@ -131,7 +131,7 @@
             let sl = document.getElementById("sl").value
 
             let a
-            let risk = balance * risk_p * 0.01
+            let risk = (balance * risk_p * 0.01).toFixed(2)
 
             if(entry < sl) {
                 a = sl - entry
