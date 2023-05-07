@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Position Size Calculator</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #2a2a2a;
+            color: white;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 6rem;
+            justify-content: center;
+            margin-top: 10vh;
+        }
+
+        #form form, #results{
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            align-items: center;
+        }
+
+        input {
+            width: 10rem;
+            font-size: 1rem;
+            background-color: #2a2a2a;
+            color: white;
+            border-radius: 3px;
+            outline: none;
+            border: 2px solid white;
+            padding: 3px;
+        }
+
+        input:focus {
+            outline: none;
+            border: 2px solid #74a8f6;
+        }
+
+        input[type=number] {
+            appearance: textfield;
+        }
+
+        button {
+            width: 10rem;
+            margin-top: 2rem;
+            font-size: 1rem;
+            background-color: #74a8f6;
+            color: white;
+            border-radius: 3px;
+            border: none;
+            padding: 10px;
+        }
+
+        label {
+            display: inline-block;
+            min-width: 12rem;
+        }
+
+        #pos_size, #risk {
+            display: inline-block;
+            min-width: 10rem;
+            font-weight: 700;
+            color: #74a8f6;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <main>
+
+        <section id="form">
+            <form onsubmit="return calculate()">
+                <span>
+                    <label for="balance">Account Balance USD</label>
+                    <input type="number" id="balance" required>
+                </span>
+    
+                <span>
+                    <label for="risk_p">Risk %</label>
+                    <input type="number" id="risk_p" step="0.1" required>
+                </span>
+    
+                <span>
+                    <label for="entry">Entry Price</label>
+                    <input type="number" id="entry" step="0.0000001" required>
+                </span>
+    
+                <span>
+                    <label for="sl">Stop Loss</label>
+                    <input type="number" id="sl" step="0.0000001" required>
+                </span>
+    
+                <button type="submit">Calculate</button>
+            </form>
+        </section>
+
+        <section id="results" >
+            <span>
+                <label for="risk">Risk USD</label>
+                <span id="risk"></span>
+            </span>
+
+            <span>
+                <label for="pos_size">Position Size</label>
+                <span id="pos_size"></span>
+            </span>
+        </section>
+
+    </main>
+
+    <script>
+
+        function calculate() {
+            let balance = document.getElementById("balance").value
+            let risk_p = document.getElementById("risk_p").value
+            let entry = document.getElementById("entry").value
+            let sl = document.getElementById("sl").value
+
+            let a
+            let risk = balance * risk_p * 0.01
+
+            if(entry < sl) {
+                a = sl - entry
+            }
+            else {
+                a = entry - sl
+            }
+
+            document.getElementById("pos_size").innerHTML = parseInt(risk/a)
+            document.getElementById("risk").innerHTML = risk
+
+            return false
+        }
+
+    </script>
+    
+</body>
+</html>
