@@ -130,17 +130,17 @@
             let entry = document.getElementById("entry").value
             let sl = document.getElementById("sl").value
 
-            let a
+            let result
             let risk = balance * risk_p * 0.01
 
             if(entry < sl) {
-                a = sl - entry
+                result = risk / (sl - entry)
             }
             else {
-                a = entry - sl
+                result = risk / (entry - sl)
             }
 
-            document.getElementById("pos_size").innerHTML = (risk/a).toFixed(3)
+            document.getElementById("pos_size").innerHTML = result.toFixed(4)
             document.getElementById("risk").innerHTML = risk.toFixed(2)
 
             return false
